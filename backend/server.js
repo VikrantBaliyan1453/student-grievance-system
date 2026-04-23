@@ -8,7 +8,13 @@ const grievanceRoutes = require('./routes/grievances');
 
 const app = express();
 
-app.use(cors());
+// CORS - yeh lagao sabse pehle
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 app.use('/api', authRoutes);
@@ -23,4 +29,4 @@ mongoose.connect(process.env.MONGO_URI)
       console.log(`Server running on port ${process.env.PORT || 5000}`)
     );
   })
-  .catch(err => console.error(err));
+  .catch(err => console.error('MongoDB Error:', err));
